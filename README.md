@@ -36,7 +36,8 @@ Os favoritos ficam no banco SQLite `moviespot.db`, criado na raiz do projeto na 
 - React 19 + Vite
 - React Router 8 (modo declarativo, rotas com carregamento sob demanda)
 - Tailwind CSS 4 (tokens de cor em CSS para os temas claro e escuro)
-- Express 5 + better-sqlite3 (API e banco SQLite dos favoritos)
+- Express 5 (servidor da API de favoritos)
+- better-sqlite3 (banco de dados SQLite dos favoritos)
 - ESLint 9 + `eslint-plugin-jsx-a11y` (análise estática de acessibilidade)
 
 ## Funcionalidades
