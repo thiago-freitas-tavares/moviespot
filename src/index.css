@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/*
+  Tokens de cor. Todos os pares texto/fundo foram verificados com a fórmula de
+  luminância relativa da WCAG (mín. 4.5:1 para texto, 3:1 para componentes de UI e foco).
+  Tema escuro é o padrão; o claro sobrescreve as mesmas variáveis.
+*/
+@theme {
+  --color-bg: #0b0f17;
+  --color-surface: #141a24;
+  --color-surface-2: #1d2532;
+  --color-border: #2c3646; /* decorativa */
+  --color-border-strong: #6b7a90; /* controles de formulário (≥ 3:1) */
+  --color-fg: #f1f5f9;
+  --color-muted: #a9b4c4;
+  --color-accent: #fbbf24;
+  --color-accent-hover: #fcd34d;
+  --color-accent-fg: #111827;
+  --color-accent-text: #fcd34d;
+  --color-focus: #fbbf24;
+  --color-danger: #f87171;
+  --color-danger-fg: #111827;
+  --color-success: #4ade80;
+  --color-star: #fbbf24;
+
+  --font-sans: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+:root[data-theme="light"] {
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef2f7;
+  --color-border: #e2e8f0;
+  --color-border-strong: #64748b;
+  --color-fg: #0f172a;
+  --color-muted: #475569;
+  --color-accent: #fbbf24;
+  --color-accent-hover: #f59e0b;
+  --color-accent-fg: #111827;
+  --color-accent-text: #92400e;
+  --color-focus: #b45309;
+  --color-danger: #b91c1c;
+  --color-danger-fg: #ffffff;
+  --color-success: #15803d;
+  --color-star: #b45309;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  /*
+    WCAG 2.4.11: ao navegar por Tab, o navegador rola o elemento focado para fora
+    da área coberta pelo cabeçalho fixo (topo) e pelas notificações (rodapé).
+  */
+  html {
+    scroll-padding-top: 5rem;
+    scroll-padding-bottom: 6rem;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+    WCAG 2.4.7 / 2.4.13: indicador de foco visível, espesso e com contraste.
+    "outline" (em vez de box-shadow) continua visível no modo de alto contraste do Windows.
+  */
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Alvos de foco programático (main, títulos) não são interativos: sem anel. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  /* O botão "limpar" nativo do Chrome conflitaria com o nosso botão acessível. */
+  input[type="search"]::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  dialog::backdrop {
+    background-color: rgb(0 0 0 / 0.75);
+  }
+}
+
+/* WCAG 2.3.3: respeita a preferência do sistema por menos movimento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
