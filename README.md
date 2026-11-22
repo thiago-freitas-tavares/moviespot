@@ -5,6 +5,8 @@ usabilidade (heurísticas de Nielsen) e acessibilidade (WCAG 2.2, nível AA).
 
 Projeto acadêmico: A3 de _Usabilidade, desenvolvimento web, mobile e jogos_ (2026).
 
+**Site publicado:** <https://moviespot-n602.onrender.com> (o primeiro acesso pode levar cerca de 1 minuto; veja [Publicação](#publicação-render)).
+
 ## Como rodar
 
 Pré-requisito: Node.js 22 ou superior.
