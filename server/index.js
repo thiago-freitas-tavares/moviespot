@@ -1,12 +1,16 @@
 import express from 'express'
+import { existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import db from './db.js'
 
 /*
   API dos favoritos. Em desenvolvimento, o Vite repassa as chamadas a /api para esta
   porta (proxy em vite.config.js): para o navegador, site e API têm o mesmo endereço,
-  então não é preciso liberar CORS.
+  então não é preciso liberar CORS. Em produção (Render), este servidor também entrega o site.
 */
-const PORT = 3001
+// A hospedagem informa a porta na variável PORT; localmente, 3001.
+const PORT = process.env.PORT ?? 3001
+const DIST = fileURLToPath(new URL('../dist', import.meta.url))
 
 const listAll = db.prepare(`
   SELECT id, title, poster_path, release_date, vote_average, vote_count, added_at AS addedAt
@@ -65,6 +69,18 @@ app.delete('/api/favoritos', (req, res) => {
   res.status(204).end()
 })
 
+/*
+  Site já compilado (pasta dist, gerada pelo `npm run build`). Endereços que não são
+  arquivos nem API, como /favoritos, recebem o index.html e o React Router mostra a página.
+*/
+if (existsSync(DIST)) {
+  app.use(express.static(DIST))
+  app.use((req, res, next) => {
+    if (req.method !== 'GET' || req.path.startsWith('/api')) return next()
+    res.sendFile('index.html', { root: DIST })
+  })
+}
+
 // Qualquer falha inesperada (ex.: banco travado) vira um erro 500 em JSON.
 app.use((error, req, res, next) => {
   console.error(error)
@@ -73,5 +89,5 @@ app.use((error, req, res, next) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`API de favoritos em http://localhost:${PORT}/api/favoritos`)
+  console.log(`Servidor do MovieSpot na porta ${PORT} (API em /api/favoritos)`)
 })

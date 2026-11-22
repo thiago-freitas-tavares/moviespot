@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "description": "Catálogo de filmes em React que consome a API pública do TMDB, com foco em usabilidade (heurísticas de Nielsen) e acessibilidade (WCAG 2.2).",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "concurrently -n api,site -c cyan,magenta \"node --watch server/index.js\" \"vite\"",
     "server": "node server/index.js",

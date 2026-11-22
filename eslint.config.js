@@ -29,4 +29,9 @@ export default [
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]', argsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  // O servidor roda no Node, não no navegador (ex.: `process.env.PORT`).
+  {
+    files: ['server/**/*.js'],
+    languageOptions: { globals: globals.node },
+  },
 ]

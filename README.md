@@ -31,6 +31,16 @@ npm run lint      # ESLint + regras de acessibilidade (jsx-a11y)
 
 Os favoritos ficam no banco SQLite `moviespot.db`, criado na raiz do projeto na primeira vez que a API roda. Para ver a tabela no VS Code, abra o arquivo com a extensão SQLite Viewer.
 
+## Publicação (Render)
+
+O projeto é publicado como um **Web Service** no [Render](https://render.com), ligado a este repositório: cada `git push` gera uma nova versão. Em produção, o mesmo servidor entrega o site (pasta `dist`) e a API de favoritos, na porta que o Render informa pela variável `PORT`.
+
+- **Build command:** `npm install && npm run build`
+- **Start command:** `npm run server`
+- **Versão do Node:** a do campo `engines` do `package.json` (22 ou superior).
+
+No plano gratuito, o serviço "dorme" após 15 minutos sem acesso (o primeiro acesso depois disso leva cerca de 1 minuto) e os arquivos são apagados quando ele reinicia. Por isso, o banco de favoritos volta vazio de tempos em tempos.
+
 ## Tecnologias
 
 - React 19 + Vite
@@ -52,7 +62,7 @@ Os favoritos ficam no banco SQLite `moviespot.db`, criado na raiz do projeto na 
 
 ```
 server/
-├── index.js                 # API de favoritos (Express): listar, adicionar, remover, limpar
+├── index.js                 # API de favoritos (Express) e, em produção, entrega do site
 └── db.js                    # Banco SQLite (better-sqlite3) e criação da tabela
 src/
 ├── App.jsx                  # Rotas + providers de estado global
